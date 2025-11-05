@@ -23,8 +23,8 @@ const Home = () => {
   };
 
   const handleLike = (selectedId) => {
-    console.log("🚀 ~ handleLike ~ selectedId:", selectedId)
-  }
+    console.log("🚀 ~ handleLike ~ selectedId:", selectedId);
+  };
 
   useEffect(() => {
     // 페이지 진입시 딱 한번 실행
