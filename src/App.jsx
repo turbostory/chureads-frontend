@@ -31,6 +31,7 @@ function App() {
   // view
   return (
     <div className="bg-churead-black h-full text-white overflow-auto">
+      <div className="max-w-[572px] mx-auto h-full">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
