@@ -5,7 +5,7 @@ import SignUp from "./pages/SignUp";
 import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import Edit from "./pages/Edit";
-import { BiWorld } from "react-icons/bi";
+//import { BiWorld } from "react-icons/bi";
 import Study from "./pages/Study";
 
 function App() {
