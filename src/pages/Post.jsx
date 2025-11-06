@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PostInput from "../components/PostInput";
+import { auth } from "../firebase";
 
 const Post = () => {
   // logic
   const history = useNavigate();
+
+  // API 기본 URL 설정
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+  const currentUser = auth.currentUser;
+
   const [churead, setChuread] = useState("");
 
   const handleChange = (value) => {
@@ -29,6 +36,15 @@ const Post = () => {
     // 빈 스트링이 아닌 경우
     // TODO: 백엔드에 Post 요청
 
+    const newItem = {
+      userName: currentUser.displayName,
+      userId: currentUser.uid,
+      userProfileImage:
+        currentUser.photoURL ||
+        "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+      content: resultChuread,
+    };
+
     history("/"); // home화면으로 이동
   };
 
@@ -48,7 +64,11 @@ const Post = () => {
         <div className="h-full overflow-auto">
           <form id="post" onSubmit={handlePost}>
             {/* START: 사용자 입력 영역 */}
-            <PostInput onChange={handleChange} />
+            <PostInput
+              userName={currentUser.displayName}
+              userProfileImage={currentUser.photoURL}
+              onChange={handleChange}
+            />
             {/* END: 사용자 입력 영역 */}
             {/* START: 게시 버튼 영역 */}
             <div className="w-full max-w-[572px] flex items-center fixed bottom-0 lef p-6">

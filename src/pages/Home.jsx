@@ -4,12 +4,18 @@ import Nav from "../components/layout/Nav";
 import FeedItem from "../components/FeedItem";
 import { initialFeedList, initialTags } from "../data/response";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 const Home = () => {
   // logic
   const history = useNavigate();
 
-  const [feedList, setFeedList] = useState(initialFeedList);
+  // API 기본 URL 설정
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+  const currentUser = auth.currentUser;
+
+  const [feedList, setFeedList] = useState([]);
 
   const handleEdit = (data) => {
     history(`/edit/${data._id}`); // edit페이지로 이동
@@ -29,7 +35,20 @@ const Home = () => {
   useEffect(() => {
     // 페이지 진입시 딱 한번 실행
     // TODO: 백엔드에 Get 요청
-  }, []);
+
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/posts`);
+        const result = await response.json();
+        console.log("🚀 ~ fetchPosts ~ result:", result);
+        setFeedList(result);
+      } catch (error) {
+        console.error(`게시물 조회 실패: ${error}`);
+      }
+    };
+
+    fetchPosts();
+  }, [API_BASE_URL]);
 
   // view
   return (
@@ -47,8 +66,9 @@ const Home = () => {
               <FeedItem
                 key={feed._id}
                 data={feed}
-                tags={initialTags}
-                isAuthor={true}
+                tags={feed.tags}
+                isAuthor={currentUser.uid === feed.userId}
+                currentUserId={currentUser.uid}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 onLike={handleLike}
