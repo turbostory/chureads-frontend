@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import useNotification from "./useNotification";
 
 /**
- * Server-Sent Events(SSE)를 통한 실시간 통신 관리 훅
+ * Server-Sent Events(SSE)를 통한 실시간 통신 관리 훅(함수)
  * 백엔드에서 발생하는 실시간 이벤트를 수신하고 처리
  */
 
