@@ -73,6 +73,11 @@ const Home = () => {
     fetchPosts();
   }, [API_BASE_URL]);
 
+  useEffect(() => {
+    // 로그인 된 상태가 아니면 로그인 페이지로 이동
+    !currentUser && history("/login");
+  });
+
   // view
   return (
     <div className="h-full pt-20 pb-[74px] overflow-hidden">
